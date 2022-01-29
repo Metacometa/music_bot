@@ -1,10 +1,13 @@
 import telebot
 import sqlite3
+import sys
 import config
 import functions
 from telebot import types
 from telebot import apihelper
-bot = telebot.TeleBot(config.token)
+sys.path.insert(0, 'C:/Users/Кирилл/PycharmProjects/Tokens/')
+import mytokens
+bot = telebot.TeleBot(mytokens.music_bot_token)
 
 @bot.message_handler(commands=['start'])
 def button_message(message):
@@ -23,7 +26,6 @@ def print_song(message):
     sqlite_select_query = """SELECT * from song_list"""
     cursor.execute(sqlite_select_query)
     records = str(cursor.fetchall())
-    print(records)
     records = functions.fix_list(records)
     print(records)
     bot.send_message(message.chat.id, records)
